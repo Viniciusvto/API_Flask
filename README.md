@@ -1,2 +1,1 @@
-projeto playgroud
-testando branches no GIT
+Criando uma API de curiosidades usando flask
