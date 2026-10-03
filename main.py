@@ -1,17 +1,48 @@
-from flask import Flask, jsonfy # essa bilioteca converte dicionarios e objetos python em respostas json
+from datetime import datetime
+from flask import Flask, jsonify
+import requests
 
-#vou criar uma instancia da aplicação Flask
 app = Flask(__name__)
 
-#defino uma rota para a aplicação
-@app.route('/') # é a rota é o endereço que o usuário vai acessar para ver a resposta da aplicação
-def home():
-    #jsonfy transforma um dicionario python no formato json
-    return jsonfy({
-        "mensagem": "API de fatos Historicos ativa!",
-        "status": "sucesso"
-    })
 
-#executa o servidor apenas se o arquivo for executado diretamente
-if __name__ == '__main__':
-    app.run(debug=True) #debug=True significa que o servidor vai reiniciar automaticamente quando houver alterações no código
+@app.route("/")
+def home():
+    return jsonify({"mensagem": "API ativa!", "status": "sucesso"})
+
+
+@app.route("/fatos/hoje")
+def fatos_hoje():
+    agora = datetime.now()
+    dia = agora.day
+    mes = agora.month
+
+    url = f"https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/{mes}/{dia}"
+    headers = {"User-Agent": "MinhaApiDeFatosHistoricos/1.0"}
+
+    try:
+        resposta = requests.get(url, headers=headers)
+        if resposta.status_code == 200:
+            dados = resposta.json()
+            eventos_brutos = dados.get("events", [])
+
+            eventos_formatados = []
+            for item in eventos_brutos[:1]:
+                eventos_formatados.append(
+                    {"ano": item.get("year"), "fato": item.get("text")}
+                )
+
+            return jsonify(
+                {
+                    "data": f"{dia:02d}/{mes:02d}",
+                    "total_fatos": len(eventos_formatados),
+                    "fatos": eventos_formatados,
+                }
+            )
+        else:
+            return jsonify({"erro": "Falha ao buscar dados"}), 500
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
