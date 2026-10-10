@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Aplicação Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <h1>Minha API de Fatos</h1>
+    </nav>
+
+    <section class="content">
+        <header>
+            <!-- Conteúdo principal entra aqui -->
+        </header>
+
+        <!-- Aqui você exibe os dados que vieram do Flask -->
+        <h1>📅 Fatos Históricos ({{ data }})</h1>
+
+        {% for evento in fatos %}
+            <div class="card">
+                <p><strong>{{ evento.ano }}:</strong> {{ evento.fato }}</p>
+            </div>
+        {% endfor %}
+    </section>
+</body>
+</html>
