@@ -37,7 +37,7 @@ def fatos_hoje():  # cria a função que trata a rota de fatos históricos do di
                 []
             )  # cria uma lista vazia para armazenar os eventos formatados
             for item in eventos_brutos[
-                :1
+                :2
             ]:  # percorro a lista de eventos históricos, mas pego apenas o primeiro evento ([:1]) para não sobrecarregar a resposta da API
                 eventos_formatados.append(  # acresenta eventos formatados na lista de eventos formatados
                     {

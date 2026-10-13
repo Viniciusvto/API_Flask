@@ -20,7 +20,7 @@ Documentação da API da Wikipédia: https://pt.wikipedia.org/wiki/Wikip%C3%A9di
 ## Estrutura do projeto
 
 ```
-API_Flask/
+what_day/
 ├── main.py              # aplicação Flask e rota principal
 ├── templates/
 │   └── fatos.html       # página que exibe os fatos
