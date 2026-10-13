@@ -53,7 +53,7 @@ python main.py
 
 Depois, acesse http://127.0.0.1:5000 no navegador.
 
-Para sair do ambiente virtual, use `deactivate`.
+Sair do ambiente `deactivate`.
 
 ## Rotas
 
